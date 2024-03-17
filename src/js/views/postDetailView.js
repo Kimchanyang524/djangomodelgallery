@@ -1,6 +1,6 @@
-export async function createPostDetailView(postId) {
+export async function createPostDetailView(fileName) {
     try {
-        const response = await fetch(`${window.location.origin}/src/posts/${postId}`);
+        const response = await fetch(`${window.location.origin}/src/posts/${fileName}`);
         if (!response.ok) {
             throw new Error('Failed to fetch post detail');
         }

@@ -4,6 +4,7 @@
         "title": "Django Blog Post Model",
         "date": "2023-06-01",
         "category": "Blog",
+        "modelCount": 1,
         "tags": ["Django", "Model", "Blog", "Post"],
         "fileName": "001_django-blog-post-model.md",
         "contributor": {
@@ -19,6 +20,7 @@
         "title": "Django Shopping Mall Product Model",
         "date": "2023-06-02",
         "category": "Shopping Mall",
+        "modelCount": 1,
         "tags": ["Django", "Model", "Shopping Mall", "Product"],
         "fileName": "002_django-shopping-mall-product-model.md",
         "contributor": {
@@ -34,6 +36,7 @@
         "title": "Django Custom User Model",
         "date": "2023-06-03",
         "category": "Authentication",
+        "modelCount": 1,
         "tags": ["Django", "Model", "User", "Authentication"],
         "fileName": "003_django-custom-user-model.md",
         "contributor": {
@@ -49,6 +52,7 @@
         "title": "Django Comment Model",
         "date": "2023-06-04",
         "category": "Blog",
+        "modelCount": 1,
         "tags": ["Django", "Model", "Blog", "Comment"],
         "fileName": "004_django-comment-model.md",
         "contributor": {
@@ -64,6 +68,7 @@
         "title": "Django Tagging Model",
         "date": "2023-06-05",
         "category": "Blog",
+        "modelCount": 1,
         "tags": ["Django", "Model", "Tagging", "Blog"],
         "fileName": "005_django-tagging-model.md",
         "contributor": {
