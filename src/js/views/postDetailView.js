@@ -1,5 +1,7 @@
 import CodeMirrorEditor from "../service/CodeMirrorEditor.js";
+import MermaidLoader from "../service/MermaidLoader.js";
 import { parseMarkdown } from "../util/markdownParser.js";
+
 export async function createPostDetailView(fileName) {
   try {
     const response = await fetch(
@@ -31,10 +33,16 @@ function createPostDetailElement(htmlContent, mermaidCodeBlocks) {
         <article class="prose">${htmlContent}</article>
         <div class="mermaid-code-editor-container"></div> 
         <Textarea class="language-mermaid"></Textarea>
+        <div class="mermaid">
+        {mermaidCodeBlocks}
+        </div>
     `;
 
   const editor = new CodeMirrorEditor(".language-mermaid", mermaidCodeBlocks);
   editor.initialize();
+
+  const loader = new MermaidLoader(".mermaid", mermaidCodeBlocks);
+  loader.loadAndRenderMermaid();
 
   return postDetailSection;
 }
