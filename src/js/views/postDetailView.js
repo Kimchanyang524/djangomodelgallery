@@ -1,6 +1,5 @@
-import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 import CodeMirrorEditor from "../service/CodeMirrorEditor.js";
-
+import { parseMarkdown } from "../util/markdownParser.js";
 export async function createPostDetailView(fileName) {
   try {
     const response = await fetch(
@@ -10,21 +9,9 @@ export async function createPostDetailView(fileName) {
       throw new Error("Failed to fetch post detail");
     }
     const markdownContent = await response.text();
-    const mermaidCodeBlocks = [];
 
-    marked.use({
-      renderer: {
-        code(code, infostring) {
-          if (infostring === "mermaid") {
-            mermaidCodeBlocks.push(code);
-            return '<div class="mermaid-placeholder"></div>';
-          }
-          return `<pre><code class="${infostring}">${code}</code></pre>`;
-        },
-      },
-    });
+    const { htmlContent, mermaidCodeBlocks } = parseMarkdown(markdownContent);
 
-    const htmlContent = marked.parse(markdownContent);
     const postDetailSection = createPostDetailElement(
       htmlContent,
       mermaidCodeBlocks.join("\n") // 여러 개의 mermaid 코드 블록을 하나의 문자열로 결합
