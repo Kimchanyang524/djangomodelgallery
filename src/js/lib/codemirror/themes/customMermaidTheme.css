@@ -1,0 +1,25 @@
+/* themes/customMermaidTheme.css */
+
+.cm-s-default .cm-keyword {
+  color: #708;
+  font-weight: bold;
+}
+
+.cm-s-default .cm-class-name {
+  color: #00f;
+}
+
+.cm-s-default .cm-type {
+  color: #080;
+  font-style: italic;
+}
+
+.cm-s-default .cm-property {
+  color: #a00;
+}
+
+.cm-s-default .cm-link {
+  color: #00f;
+}
+
+/* 추가적인 스타일 클래스 정의가 필요한 경우, 여기에 작성합니다. */

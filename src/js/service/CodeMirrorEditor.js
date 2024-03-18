@@ -1,14 +1,15 @@
+// service > CodeMirrorEditor.js
+
+import { mermaidMode } from "../lib/codemirror/mermaidMode.js";
+
 export default class CodeMirrorEditor {
   constructor(selector, initialValue = "") {
     this.selector = selector;
     this.initialValue = initialValue;
     this.editor = null;
   }
-
-  // CodeMirror 스크립트와 CSS 동적 추가 함수
   async loadCodeMirror() {
     return new Promise((resolve, reject) => {
-      // CodeMirror CSS 동적 추가
       const link = document.createElement("link");
       link.rel = "stylesheet";
       link.href =
@@ -22,12 +23,12 @@ export default class CodeMirrorEditor {
         "https://cdn.jsdelivr.net/npm/codemirror/theme/dracula.min.css";
       document.head.appendChild(themeLink);
 
-      // CodeMirror 스크립트 동적 추가
       const script = document.createElement("script");
       script.src =
         "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.59.4/codemirror.min.js";
       script.onload = () => {
         // 추가적인 스크립트 로드
+        mermaidMode(CodeMirror);
         const markdownScript = document.createElement("script");
         markdownScript.src =
           "https://cdn.jsdelivr.net/npm/codemirror@5.63.3/mode/markdown/markdown.min.js";
@@ -55,7 +56,7 @@ export default class CodeMirrorEditor {
       if (CodemirrorTextarea) {
         this.editor = CodeMirror.fromTextArea(CodemirrorTextarea, {
           lineNumbers: true,
-          mode: "text/x-markdown",
+          mode: "mermaid",
           theme: "dracula",
         });
         this.setValue(this.initialValue);
