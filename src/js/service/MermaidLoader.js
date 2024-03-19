@@ -1,4 +1,5 @@
 // MermaidLoader.js
+
 export default class MermaidLoader {
   constructor(selector, mermaidCode) {
     this.selector = selector;
@@ -26,8 +27,13 @@ export default class MermaidLoader {
   renderMermaid() {
     const element = document.querySelector(this.selector);
     if (element) {
-      element.innerHTML = `<pre class="mermaid">${this.mermaidCode}</pre>`;
-      window.mermaid.init(undefined, element.querySelector(".mermaid"));
+      try {
+        window.mermaid.parse(this.mermaidCode); // Mermaid 코드가 유효한지 확인
+        element.innerHTML = `<pre class="mermaid">${this.mermaidCode}</pre>`;
+        window.mermaid.init(undefined, element.querySelector(".mermaid"));
+      } catch (error) {
+        console.error("Invalid Mermaid code:", error);
+      }
     }
   }
 }

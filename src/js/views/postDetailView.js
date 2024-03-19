@@ -1,6 +1,9 @@
 import CodeMirrorEditor from "../service/CodeMirrorEditor.js";
 import MermaidLoader from "../service/MermaidLoader.js";
+import SVGHandler from "../service/SVGHandler.js";
+import { isValidMermaidCode } from "../util/isValidCods.js";
 import { parseMarkdown } from "../util/markdownParser.js";
+import { throttle } from "../util/throttle.js";
 
 export async function createPostDetailView(fileName) {
   try {
@@ -33,16 +36,44 @@ function createPostDetailElement(htmlContent, mermaidCodeBlocks) {
         <article class="prose">${htmlContent}</article>
         <div class="mermaid-code-editor-container"></div> 
         <Textarea class="language-mermaid"></Textarea>
-        <div class="mermaid">
+        <div class="mermaid w-full flex justify-center ">
         {mermaidCodeBlocks}
         </div>
+        <button id="resetZoom">Reset Zoom</button>
     `;
 
   const editor = new CodeMirrorEditor(".language-mermaid", mermaidCodeBlocks);
-  editor.initialize();
+
+  editor.initialize().then(() => {
+    editor.editor.on(
+      "change",
+      throttle(() => {
+        const currentValue = editor.getValue();
+        const { isValid, errorMessage } = isValidMermaidCode(currentValue);
+        if (isValid) {
+          loader.mermaidCode = currentValue;
+          try {
+            loader.loadAndRenderMermaid();
+          } catch (error) {}
+        } else {
+          // Mermaid 코드가 유효하지 않으면 사용자에게 오류 메시지를 표시합니다.
+          // console.error("Mermaid code error:", errorMessage);
+          // 사용자에게 오류 메시지를 표시하는 로직을 여기에 추가할 수 있습니다.
+        }
+      }, 1000)
+    );
+  });
 
   const loader = new MermaidLoader(".mermaid", mermaidCodeBlocks);
-  loader.loadAndRenderMermaid();
+  loader
+    .loadAndRenderMermaid()
+    .then(() => {
+      const svgHandler = new SVGHandler(".mermaid", mermaidCodeBlocks);
+      svgHandler.initializeZoomAndPan();
+    })
+    .catch((error) => {
+      console.error("Failed to load or render Mermaid SVG:", error);
+    });
 
   return postDetailSection;
 }
