@@ -33,7 +33,7 @@ def main():
 
     result = {}
     for file in files:
-        result[file] = read_file(file)
+        result[file] = read_file(file).split()
     print(json.dumps(result, indent=4))
 
 
