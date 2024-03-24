@@ -1,15 +1,31 @@
-// utils/markdownParser.js
-
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
 /**
- * Markdown 문자열을 파싱하여 HTML과 mermaid 코드 블록을 반환합니다.
- * @param {string} markdownContent 마크다운 형식의 문자열
- * @return {object} HTML 문자열과 mermaid 코드 블록 배열을 포함한 객체
+ * Markdown 문자열에서 프론트매터를 추출하고, HTML로 파싱된 본문과 함께 반환합니다.
+ * 프론트매터는 YAML 형식으로 마크다운 최상단에 위치해 있으며, '---'로 구분됩니다.
+ *
+ * @param {string} markdownContent 마크다운 형식의 문자열.
+ * @return {object} HTML 문자열, mermaid 코드 블록 배열, 프론트매터 데이터를 포함한 객체.
  */
 export function parseMarkdown(markdownContent) {
-  const mermaidCodeBlocks = [];
+  const frontMatterRegex = /^---\s*\n([\s\S]+?)\n---/;
+  let frontMatter = {};
+  let contentWithoutFrontMatter = markdownContent;
 
+  const frontMatterMatch = markdownContent.match(frontMatterRegex);
+  if (frontMatterMatch) {
+    const frontMatterString = frontMatterMatch[1];
+    contentWithoutFrontMatter = markdownContent
+      .replace(frontMatterMatch[0], "")
+      .trim();
+
+    frontMatterString.split("\n").forEach((line) => {
+      const [key, value] = line.split(":").map((part) => part.trim());
+      frontMatter[key] = value;
+    });
+  }
+
+  const mermaidCodeBlocks = [];
   marked.use({
     renderer: {
       code(code, infostring) {
@@ -22,10 +38,10 @@ export function parseMarkdown(markdownContent) {
     },
   });
 
-  const htmlContent = marked.parse(markdownContent);
-
+  const htmlContent = marked.parse(contentWithoutFrontMatter);
   return {
     htmlContent,
     mermaidCodeBlocks,
+    frontMatter,
   };
 }
