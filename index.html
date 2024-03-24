@@ -10,7 +10,7 @@
       href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography/dist/typography.min.css"
       rel="stylesheet"
     />
-
+    <link href="./src/css/custom.css" rel="stylesheet" />
     <script>
       tailwind.config = {
         content: ["./*.html"],
@@ -31,13 +31,17 @@
             <a href="#">프로젝트 소개</a>
           </li>
           <li><a href="#">Django Model Gallery</a></li>
-          <li><a href="#">기여하기</a></li>
+
+          <li><a href="./contribute/index.html">기여하기</a></li>
           <li><a href="./license/index.html">라이센스</a></li>
         </ul>
       </nav>
     </header>
+    <section id="filter" class="flex gap-x-2"></section>
+    <button id="clearFilters">Clear Filters</button>
     <main></main>
     <footer></footer>
+
     <script type="module" src="./src/js/main.js"></script>
   </body>
 </html>

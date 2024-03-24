@@ -1,5 +1,7 @@
 import { initializeTheme } from "./util/initializeTheme.js";
 
+import { filterButtons } from "./constants/filterList.js";
+import MainFilterManager from "./service/MainFilterManager.js";
 import { fetchPosts } from "./util/fetchPost.js";
 import { applySavedTheme } from "./util/toggleTheme.js";
 import { createPostDetailView } from "./views/postDetailView.js";
@@ -14,7 +16,7 @@ async function renderPostDetail(fileName) {
       mainElement.appendChild(postDetailView);
     } else {
       console.error(
-        `Failed to render post detail for post fileName: ${fileName}`
+        `Failed to render post detail for post fileName: ${fileName}`,
       );
     }
   } catch (error) {
@@ -32,7 +34,7 @@ async function renderMainContent() {
       postSection.addEventListener("click", (event) => {
         if (event.target.tagName === "A" && event.target.dataset.id) {
           const postId = event.target.dataset.id;
-          // console.log(postId);
+
           renderPostDetail(posts[parseInt(postId) - 1].fileName);
         }
       });
@@ -40,11 +42,12 @@ async function renderMainContent() {
     });
 
     main.innerHTML = "";
+
     postSections.forEach((section) => main.appendChild(section));
   } catch (error) {
     console.error(
       "데이터를 가져오는데 실패했습니다. 애러명을 확인해주세요.",
-      error
+      error,
     );
     main.innerHTML =
       "<p>데이터를 가져오는데 실패했습니다. console에 찍힌 애러명을 확인해주세요.</p>";
@@ -60,3 +63,25 @@ applySavedTheme();
 
 initializeTheme();
 renderMainContent();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const mainFilterManager = new MainFilterManager(renderMainContent);
+
+  const filterContainer = document.getElementById("filter");
+
+  filterButtons.forEach((button) => {
+    const btn = document.createElement("button");
+    btn.classList.add("bg-gray-200", "hover:bg-gray-300", "rounded-md", "p-2");
+    btn.id = button.id;
+    btn.textContent = button.text;
+    filterContainer.appendChild(btn);
+
+    mainFilterManager.addFilter(button.id, button.param, button.value);
+  });
+
+  document.getElementById("clearFilters").addEventListener("click", () => {
+    mainFilterManager.clearFilters();
+  });
+
+  renderMainContent();
+});
