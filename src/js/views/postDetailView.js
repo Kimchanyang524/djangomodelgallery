@@ -1,25 +1,29 @@
 import { getContributorProfile } from "../components/ContributorProfile.js";
 import CodeMirrorEditor from "../service/CodeMirrorEditor.js";
-import MermaidLoader from "../service/MermaidLoader.js";
-import SVGConverter from "../service/SVGConverter.js";
-import SVGHandler from "../service/SVGHandler.js";
+import DjangoCodeBlocksEditor from "../service/DjangoCodeBlocksEditor.js";
+import VizRenderer from "../service/VizRenderer.js";
 import { fetchPostDetail } from "../util/fetchPostDetail.js";
-import { isValidMermaidCode } from "../util/isValidCodes.js";
 import { parseMarkdown } from "../util/markdownParser.js";
 import { throttle } from "../util/throttle.js";
 
 export async function createPostDetailView(fileName) {
   try {
     const { markdownContent, postDetail } = await fetchPostDetail(fileName);
-    const { htmlContent, mermaidCodeBlocks } = parseMarkdown(markdownContent);
-
+    const { htmlContent, mermaidCodeBlocks, vizCodeBlocks, djangoCodeBlocks } =
+      parseMarkdown(markdownContent);
+    console.log(
+      "🚀 ~ createPostDetailView ~ djangoCodeBlocks:",
+      djangoCodeBlocks,
+    );
     const postDetailSection = createPostDetailElement(
       htmlContent,
       postDetail,
-      mermaidCodeBlocks.join("\n"), // 여러 개의 mermaid 코드 블록을 하나의 문자열로 결합
+      mermaidCodeBlocks.join("\n"),
+      vizCodeBlocks,
+      djangoCodeBlocks,
     );
-
     postDetailSection.mermaidCodeBlocks = mermaidCodeBlocks;
+
     return postDetailSection;
   } catch (error) {
     console.error("Error:", error);
@@ -27,66 +31,82 @@ export async function createPostDetailView(fileName) {
   }
 }
 
-function createPostDetailElement(htmlContent, postDetail, mermaidCodeBlocks) {
+async function createPostDetailElement(
+  htmlContent,
+  postDetail,
+  mermaidCodeBlocks,
+  vizCodeBlocks,
+  djangoCodeBlocks,
+) {
   const postDetailSection = document.createElement("section");
-
   const contributorProfile = getContributorProfile(postDetail);
 
   postDetailSection.innerHTML =
     contributorProfile +
     `
-    <section class="flex relative ">
-        <article class="prose w-full min-w-1/2 px-6 pt-10">${htmlContent}</article>
-        <Textarea class="language-mermaid"></Textarea>
-        <div class="mermaid w-full flex justify-center ">
-        {mermaidCodeBlocks}
+ 
+    <section class="flex flex-col md:flex-row w-full h-lvh items-center justify-center">
+      <article class="prose 2xl:prose-xl w-full md:w-1/2 h-full overflow-y-auto px-10 pt-5">${htmlContent}</article>
 
-      
-        </div>
-        <button class="absolute right-10 " id="resetZoom">Reset Zoom</button>
+
+      <div class="flex flex-col relative">
+    
+      <div class="django-container w-full">
+     
+    
+      </div>
+
+      <div class="viz-image-holder"></div>
+      </div>
+    </section>
+   
+   
+    <section class="mermaid">
+    <Textarea class="language-viz"></Textarea>
+        ${mermaidCodeBlocks} <button class="absolute right-10" id="resetZoom">Reset Zoom</button>
         <button class="absolute right-10 top-10" id="downloadSVG" data-format="svg">Download SVG</button>
-   </section>
-    `;
+      </section>
 
-  const editor = new CodeMirrorEditor(".language-mermaid", mermaidCodeBlocks);
+  
+ 
+  `;
 
+  const vizRenderer = new VizRenderer();
+
+  const svgString = await vizRenderer.renderSVG(vizCodeBlocks[0], {
+    scale: 2,
+  });
+
+  const ERDBlock = postDetailSection.querySelector(".viz-image-holder");
+  ERDBlock.innerHTML = svgString;
+
+  const models = new DjangoCodeBlocksEditor(
+    ".django-container",
+    djangoCodeBlocks,
+    true,
+  );
+  models.initialize();
+
+  const editor = new CodeMirrorEditor(".language-viz", vizCodeBlocks[0]);
   editor.initialize().then(() => {
     editor.editor.on(
       "change",
-      throttle(() => {
+      throttle(async () => {
         const currentValue = editor.getValue();
-        const { isValid, errorMessage } = isValidMermaidCode(currentValue);
-        if (isValid) {
-          loader.mermaidCode = currentValue;
-          try {
-            loader.loadAndRenderMermaid();
-          } catch (error) {}
-        } else {
-          // Mermaid 코드가 유효하지 않으면 사용자에게 오류 메시지를 표시합니다.
-          // console.error("Mermaid code error:", errorMessage);
-          // 사용자에게 오류 메시지를 표시하는 로직을 여기에 추가할 수 있습니다.
+
+        // Viz DOT 구문 유효성 검사 로직을 여기에 추가
+        try {
+          // TODO: png 다운로드 기능 추가
+          const svgString = await vizRenderer.renderSVG(currentValue, {
+            scale: 2,
+          });
+          document.querySelector(".viz-image-holder").innerHTML = svgString;
+        } catch (error) {
+          console.error("Viz rendering error:", error);
         }
       }, 1000),
     );
   });
-
-  const loader = new MermaidLoader(".mermaid", mermaidCodeBlocks);
-  loader
-    .loadAndRenderMermaid()
-    .then(() => {
-      const svgHandler = new SVGHandler(".mermaid", mermaidCodeBlocks);
-      svgHandler.initializeZoomAndPan();
-
-      const svgConverter = new SVGConverter(
-        ".mermaid",
-        postDetail.title,
-        "DjangoModelGallery",
-      );
-      svgConverter.attachEventListeners();
-    })
-    .catch((error) => {
-      console.error("Failed to load or render Mermaid SVG:", error);
-    });
 
   return postDetailSection;
 }
