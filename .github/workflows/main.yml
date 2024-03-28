@@ -15,7 +15,7 @@ jobs:
 
       - name: Get changed files
         run: |
-          git status
+          git log
 
       - name: Open Python file
         run: python src/python/json.py 006_test.md
