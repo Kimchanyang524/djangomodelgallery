@@ -15,8 +15,7 @@ jobs:
 
       - name: Get changed files
         run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }} > changed_files.txt
-          cat changed_files.txt
+          git status
 
       - name: Open Python file
-        run: python src/python/json.py "$(cat changed_files.txt)"
+        run: python src/python/json.py 006_test.md
