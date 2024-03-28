@@ -12,4 +12,4 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Open Python file
-        run: python src/python/json.py src\posts\006_test.md
+        run: python src/python/json.py src/posts/006_test.md
