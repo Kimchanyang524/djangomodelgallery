@@ -2,7 +2,7 @@ name: Test Open Python file
 on:
   push:
     paths:
-      - "src/posts"
+      - "src/posts/*.md"
     branches:
       - main
 
@@ -12,6 +12,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      
+
       - name: Open Python file
         run: python src/python/json.py src/posts/006_test.md
