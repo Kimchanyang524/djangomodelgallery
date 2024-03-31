@@ -36,3 +36,44 @@
     ---
 
     * 24일 일요일 20시에 미팅 
+
+## 3월 31일 회의 내용
+1. 제주대 후원 문의
+ - 회의 불가
+
+2. 팀별 진행 상황
+    * about-page
+        - 특이사항 없음
+
+    * contribute-page
+        - 특이사항 없음
+
+    * license-page
+        - 헤더 푸터 추가
+        - 다크모드 기능 추가
+        - UI 개선
+        - 문구 테두리 및 기호 추가
+
+    * gallery-page
+        - 기능 & 기본적인 ui
+            - 헤더
+            - 푸터
+            - 디테일
+            - 리스트(작업중)
+
+        - 추가기능 & ui
+            - 다크모드
+
+    * mock-data-team
+        - 진행 완
+            - [001_django-blog-post-model.md](src/posts/001_django-blog-post-model.md)
+        - 진행 중
+            - [002_django-shopping-mall-product-model.md](src/posts/002_django-shopping-mall-product-model.md)
+
+        - 1인 팀이다 보니 다른 분들의 피드백 필요
+
+        - FeedBack
+            - 모델에 ERD 링크를 둬도 좋을거 같음.
+
+    * 자동화
+        - mock 데이터 진행에 따라 자동화 업무 분배 예정
