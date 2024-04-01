@@ -132,6 +132,7 @@ digraph AppSchema {
                 <tr><td port="category_id_fId">🔑 category_id (FK)</td></tr>
                 <tr><td port="author_id_fId">🔑 author_id (FK)</td></tr>
                </table>>];
+
     Comment [label=<<table border="0" cellborder="1" cellspacing="0">
                 <tr><td port="content" bgcolor="lightgrey"><b>Comment</b></td></tr>
                 <tr><td port="id_fId">🔐 id</td></tr>
@@ -141,6 +142,7 @@ digraph AppSchema {
                 <tr><td port="post_id_fld">🔑 post_id (FK)</td></tr>
                 <tr><td port="author_id_fld">🔑 author_id (FK)</td></tr>
                </table>>];
+
     Reply [label=<<table border="0" cellborder="1" cellspacing="0">
                 <tr><td port="content" bgcolor="lightgrey"><b>Reply</b></td></tr>
                 <tr><td port="id_fId">🔐 id</td></tr>
@@ -180,15 +182,15 @@ digraph AppSchema {
 
     // 'Accounts' 앱의 테이블 정의 (HTML-like 레코드 형식)
     CustomUser [label=<<table border="0" cellborder="1" cellspacing="0">
-                    <tr><td port="username" bgcolor="lightgrey"><b>CustomUser</b></td></tr>
-                    <tr><td port="id_fId">🔐 id</td></tr>
-                    <tr><td>username</td></tr>
-                    <tr><td>email</td></tr>
-                    <tr><td>is_active</td></tr>
-                    <tr><td>is_staff</td></tr>
-                    <tr><td>created_at</td></tr>
-                    <tr><td>updated_at</td></tr>
-                   </table>>];
+                <tr><td port="username" bgcolor="lightgrey"><b>CustomUser</b></td></tr>
+                <tr><td port="id_fId">🔐 id</td></tr>
+                <tr><td>username</td></tr>
+                <tr><td>email</td></tr>
+                <tr><td>is_active</td></tr>
+                <tr><td>is_staff</td></tr>
+                <tr><td>created_at</td></tr>
+                <tr><td>updated_at</td></tr>
+               </table>>];
   }
 
   // 외래 키 관계의 화살표 스타일 설정
