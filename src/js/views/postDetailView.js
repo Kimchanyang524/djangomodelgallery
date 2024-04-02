@@ -40,7 +40,7 @@ async function createPostDetailElement(
 ) {
   const postDetailSection = document.createElement("section");
   const contributorProfile = getContributorProfile(postDetail);
-
+  console.log("🚀 ~ djangoCodeBlocks:", djangoCodeBlocks);
   postDetailSection.innerHTML =
     contributorProfile +
     `
@@ -88,6 +88,7 @@ async function createPostDetailElement(
   models.initialize();
 
   const editor = new CodeMirrorEditor(".language-viz", vizCodeBlocks[0]);
+
   editor.initialize().then(() => {
     editor.editor.on(
       "change",
