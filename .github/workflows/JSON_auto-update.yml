@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Open Python file
-        run: python src/python/update json.py
+        run: python src/python/update_json.py
