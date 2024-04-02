@@ -1,8 +1,8 @@
 name: Test Open Python file
 on:
   push:
-    # paths:
-    #   - "src/posts/*.md"
+    paths:
+      - "src/posts/*.md"
     branches:
       - main
 
@@ -13,9 +13,5 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Get changed files
-        run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
-
       - name: Open Python file
-        run: python src/python/json.py 006_test.md
+        run: python src/python/update json.py

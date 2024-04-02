@@ -12,10 +12,7 @@ def read_file(file):
 
 
 def main():
-    files = sys.argv[1:]
-    if len(files) == 0:
-        print("Usage: python json.py <file1> <file2> ...")
-        sys.exit(1)
+    files = "src/posts/*.md"
 
     result = {}
     for file in files:
