@@ -184,7 +184,9 @@ def main():
     src/posts의 md file을 모두 읽어내어 json 파일로 변환
     '''
     json_data = []
-    for file_path in glob.glob("src/posts/*.md"):
+    file_paths = glob.glob("src/posts/*.md")
+    file_paths.sort()
+    for file_path in file_paths:
         content = read_file(file_path)
         json_data.append(write_file(content))
     with open("src/postsList/postsList-Demo.json", "w", encoding="utf-8") as f:
