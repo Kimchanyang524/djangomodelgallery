@@ -90,7 +90,6 @@ def write_file(content):
                     data["modelCount"] = int(value)
                 case "tags":
                     data["tags"] = [tag.strip() for tag in value.split("-") if tag.strip()]
-                    print(data["tags"], value)
                 case "fileName":
                     data["fileName"] = value
                 case "contributor":
