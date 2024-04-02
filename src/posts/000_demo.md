@@ -1,6 +1,6 @@
 ---
 id: 000
-title: Django Demo Model
+title: Django Demo Model 1
 date: 2023-06-01
 category: Demo
 modelCount: 0
