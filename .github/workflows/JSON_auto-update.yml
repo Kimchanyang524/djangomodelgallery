@@ -1,0 +1,25 @@
+name: Test Open Python file
+on:
+  push:
+    paths:
+      - "src/posts/*.md"
+    branches:
+      - main
+
+jobs:
+  open-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Open Python file
+        run: python src/python/update_json.py
+
+      - name: Commit and push if changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add src/postsList/postsList-Demo.json
+          git commit -m "Update postsList-Demo.json" || true
+          git push
