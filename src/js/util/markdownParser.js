@@ -1,4 +1,5 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+import { modelFunctions } from "../../postsModelList/index.js";
 
 /**
  * Markdown 문자열에서 프론트매터를 추출하고, HTML로 파싱된 본문과 함께 반환합니다.
@@ -25,6 +26,23 @@ export function parseMarkdown(markdownContent) {
     });
   }
 
+  const modelFunctionRegex = /\$(\w+)\((.*?)\)/g;
+  contentWithoutFrontMatter = contentWithoutFrontMatter.replace(
+    modelFunctionRegex,
+    (match, functionName, optionsString) => {
+      if (modelFunctions.hasOwnProperty(functionName)) {
+        let options = {};
+        if (optionsString.trim() !== "") {
+          options = JSON.parse(
+            optionsString.replace(/(\w+):/g, '"$1":').replace(/'/g, '"'),
+          );
+        }
+        return modelFunctions[functionName](options);
+      }
+      return match;
+    },
+  );
+
   const codeBlocks = {
     mermaid: [],
     viz: [],
@@ -44,15 +62,37 @@ export function parseMarkdown(markdownContent) {
         }
         if (infostring.startsWith("python")) {
           const lines = code.split("\n");
-          const djangoCodeName = lines[0].trim();
-          if (djangoCodeName.startsWith("#")) {
+          const firstLine = lines[0].trim();
+          if (firstLine.startsWith("#")) {
+            const djangoCodeName = firstLine.replace(/^#\s*/, "");
             const djangoCode = lines.slice(1).join("\n");
+
+            if (djangoCode.includes("$")) {
+              const [filePath, functionString] = djangoCodeName.split("$");
+              const functionName = functionString.split("(")[0];
+              if (modelFunctions.hasOwnProperty(functionName)) {
+                const optionsString =
+                  functionString.match(/\((.*?)\)/)?.[1] || "{}";
+                const options = JSON.parse(
+                  optionsString.replace(/(\w+):/g, '"$1":').replace(/'/g, '"'),
+                );
+                const functionResult = modelFunctions[functionName](options);
+                const codeWithFunctionResult = [
+                  `# ${filePath}`,
+                  functionResult,
+                  ...lines.slice(1),
+                ].join("\n");
+                return `<pre><code class="${infostring}">${codeWithFunctionResult}</code></pre>`;
+              }
+            }
+
             codeBlocks.django.push({
-              name: djangoCodeName.replace(/^#\s*/, ""),
+              name: djangoCodeName,
               code: djangoCode,
             });
           }
         }
+
         return `<pre><code class="${infostring}">${code}</code></pre>`;
       },
     },
