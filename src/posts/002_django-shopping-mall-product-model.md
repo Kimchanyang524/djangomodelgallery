@@ -255,58 +255,59 @@ digraph AppSchema {
 ## 모델 생성 프롬프트
 ### 1. Product 모델
 #### (1) 필드
- - name : 제품의 이름을 저장합니다.
- - description : 제품의 설명을 저장합니다
- - price : 제품의 가격을 저장합니다.
- - stock : 제품의 재고 수량을 저장합니다.
- - available : 제품 구매 가능 여부를 저장합니다.
- - discount_rate : 제품의 할인률을 저장합니다.
- - delivery_fee : 제품의 배달비를 저장합니다.
- - created_at : 제품의 등록일을 저장합니다.
- - seller : 제품의 판매자(User)를 외래키로 연결합니다.
- - category : 제품의 항목(Category)를 외래키로 연결합니다.
+ - name: 제품의 이름을 저장합니다.
+ - description: 제품의 설명을 저장합니다
+ - price: 제품의 가격을 저장합니다.
+ - stock: 제품의 재고 수량을 저장합니다.
+ - available: 제품 구매 가능 여부를 저장합니다.
+ - discount_rate: 제품의 할인률을 저장합니다.
+ - delivery_fee: 제품의 배달비를 저장합니다.
+ - created_at: 제품의 등록일을 저장합니다.
+ - seller: 제품의 판매자(User)를 외래키로 연결합니다.
+ - category: 제품의 항목(Category)를 외래키로 연결합니다.
 #### (2) 메서드
- - get_dicount_price : 할인률이 적용된 제품의 현재 가격을 반환합니다.
- - get_average_rating : 제품의 별점 평균을 소숫점 첫번째 자리까지 반환합니다.
+ - get_dicount_price: 할인률이 적용된 제품의 현재 가격을 반환합니다.
+ - get_average_rating: 제품의 별점 평균을 소숫점 첫번째 자리까지 반환합니다.
 
 ### 2. Category 모델
 #### (1) 필드
- - name : Category명을 저장합니다.
+ - name: Category명을 저장합니다.
 
 ### 3. Image 모델
 #### (1) 필드
- - product : Image를 갖는 Product를 외래키로 연결합니다.
- - image : 제품 Image가 저장된 경로를 저장합니다.
+ - product: Image를 갖는 Product를 외래키로 연결합니다.
+ - image: 제품 Image가 저장된 경로를 저장합니다.
 
 ### 4. Rating 모델
 #### (1) 필드
- - product : Rating의 대상 Product를 외래키로 연결합니다.
- - author : Rating의 작성자(User)를 외래키로 연결합니다.
- - review : Product에 대한 후기 내용을 저장합니다.
- - stars : Product에 대한 점수를 1 ~ 5 사이의 범위로 저장합니다.
- - created_at : Rating의 작성 시간을 자동으로 저장합니다.
- - updated_at : Rating의 수정 시간을 자동으로 저장합니다.
+ - product: Rating의 대상 Product를 외래키로 연결합니다.
+ - author: Rating의 작성자(User)를 외래키로 연결합니다.
+ - review: Product에 대한 후기 내용을 저장합니다.
+ - stars: Product에 대한 점수를 1 ~ 5 사이의 범위로 저장합니다.
+ - created_at: Rating의 작성 시간을 자동으로 저장합니다.
+ - updated_at: Rating의 수정 시간을 자동으로 저장합니다.
 
 ### 5. RatingImage 모델
 #### (1) 필드
- - rating : Image를 갖는 Rating을 외래키로 연결합니다.
- - image : Rating Image가 저장된 경로를 저장합니다.
+ - rating: Image를 갖는 Rating을 외래키로 연결합니다.
+ - image: Rating Image가 저장된 경로를 저장합니다.
 
 ### 6. Order 모델
 #### (1) 필드
- - orderer : 주문한 사용자(User)를 외래키로 연결합니다.
- - product : 주문 대상 제품(Product)를 외래키로 연결합니다.
- - quantity : 주문 수량을 양수 값으로 저장합니다.
- - order_date : 주문 일자를 자동으로 저장합니다.
- - status : 주문 상태를 P(Pending), D(Delivering), C(Completed) 상태 중 하나로 저장합니다.
+ - orderer: 주문한 사용자(User)를 외래키로 연결합니다.
+ - product: 주문 대상 제품(Product)를 외래키로 연결합니다.
+ - quantity: 주문 수량을 양수 값으로 저장합니다.
+ - order_date: 주문 일자를 자동으로 저장합니다.
+ - status: 주문 상태를 P(Pending), D(Delivering), C(Completed) 상태 중 하나로 저장합니다.
 
 ### 7. User 모델
- - username : User명을 저장합니다.
- - email : User의 email을 저장합니다.
- - is_active : User의 활동 여부를 Boolean 값으로 저장합니다.
- - is_staff : User의 권한이 admin인지를 Boolean 값으로 저장합니다.
- - cerated_at : User의 생성 시간을 자동으로 저장합니다.
- - updated-at : User의 수정 시간을 자동으로 저장합니다.
+#### (1) 필드
+ - username: User명을 저장합니다.
+ - email: User의 email을 저장합니다.
+ - is_active: User의 활동 여부를 Boolean 값으로 저장합니다.
+ - is_staff: User의 권한이 admin인지를 Boolean 값으로 저장합니다.
+ - cerated_at: User의 생성 시간을 자동으로 저장합니다.
+ - updated-at: User의 수정 시간을 자동으로 저장합니다.
 
 ## 기여자의 설명
  - User 모델의 경우 사용하는 사용자 모델을 적용해도 무관합니다.
