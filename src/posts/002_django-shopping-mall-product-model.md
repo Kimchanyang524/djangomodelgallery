@@ -3,7 +3,7 @@ id: 002
 title: Django Shopping Mall Product Model
 date: 2024-03-29
 category: Shopping Mall
-modelCount: 1
+modelCount: 7
 tags:
   - Django
   - Model
