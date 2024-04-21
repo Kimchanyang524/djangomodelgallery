@@ -26,6 +26,7 @@ async function renderPostDetail(fileName) {
 
 async function renderMainContent() {
   const main = document.querySelector("main");
+  main.classList.add("mt-6", "grid", "gap-4", "md:grid-cols-2", "xl:grid-cols-3", "max-w-6xl", "mx-auto");
 
   try {
     const posts = await fetchPosts();
@@ -67,7 +68,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainFilterManager = new MainFilterManager(renderMainContent);
 
   const filterContainer = document.getElementById("filter");
+  // filter 창 스타일
+  // 오른쪽 상단에 위치
+  filterContainer.classList.add("flex", "justify-end", "gap-2", "py-4", "px-8");
 
+  // 검색창 버튼
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = "검색어를 입력하세요";
+  searchInput.classList.add("border", "border-gray-300", "rounded-md", "p-2");
+  searchInput.id = "searchInput";
+  filterContainer.appendChild(searchInput);
+
+  // 검색 필터 버튼
   filterButtons.forEach((button) => {
     const btn = document.createElement("button");
     btn.classList.add("bg-gray-200", "hover:bg-gray-300", "rounded-md", "p-2");

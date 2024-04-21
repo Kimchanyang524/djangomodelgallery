@@ -38,37 +38,32 @@ async function createPostDetailElement(
   vizCodeBlocks,
   djangoCodeBlocks,
 ) {
+  // 메인 컨테이너의 클래스를 초기화
+  const main = document.querySelector("main");
+  main.className = "";
   const postDetailSection = document.createElement("section");
   const contributorProfile = getContributorProfile(postDetail);
   console.log("🚀 ~ djangoCodeBlocks:", djangoCodeBlocks);
   postDetailSection.innerHTML =
     contributorProfile +
     `
- 
-    <section class="flex flex-col md:flex-row w-full h-lvh items-center justify-center">
-      <article class="prose 2xl:prose-xl w-full md:w-1/2 h-full overflow-y-auto px-10 pt-5 bg-zinc-400">${htmlContent}</article>
-
-
+    <section class="grid gap-4 grid-cols-1 md:grid-cols-2">
+      <article class="prose 2xl:prose-xl w-full h-full overflow-y-auto px-10 pt-5">${htmlContent}</article>
       <div class="flex flex-col relative">
-    
-      <div class="django-container w-full">
-     
-    
-      </div>
-
-      <div class="viz-image-holder"></div>
+        <div class="django-container w-full"></div>
+        <div class="viz-image-holder"></div>
       </div>
     </section>
    
    
     <section class="mermaid">
-    <Textarea class="language-viz"></Textarea>
-        ${mermaidCodeBlocks} <button class="absolute right-10" id="resetZoom">Reset Zoom</button>
-        <button class="absolute right-10 top-10" id="downloadSVG" data-format="svg">Download SVG</button>
-      </section>
-
-  
- 
+    <div class="mb-20 mr-10 ml-10">
+      <Textarea class="language-viz"></Textarea>
+      ${mermaidCodeBlocks} 
+      <button class="mt-5 px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="resetZoom">Reset Zoom</button>
+      <button class="px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="downloadSVG" data-format="svg">Download SVG</button>
+    </div>
+    </section>
   `;
 
   const vizRenderer = new VizRenderer();

@@ -57,7 +57,7 @@ const bloglistFirstCardStyle = `lg:col-span-3 md:col-span-2 col-span-1 h-auto ro
 const bloglistFirstCardImgStyle = `w-full object-cover object-center rounded-2xl overflow-hidden md:h-auto h-[200px] md:w-[49%] lg:w-[52%] shrink-0 mr-8`;
 const bloglistFirstCardDescriptionStyle = `text-graylv4 text-base font-normal leading-snug md:max-h-40 md:line-clamp-[7] line-clamp-3 mb-3`;
 
-const bloglistCardStyle = `lg:max-w-sm overflow-hidden bg-white transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105 cursor-poitner col-span-1 w-auto cursor-pointer`;
+const bloglistCardStyle = `lg:max-w-sm overflow-hidden bg-white transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-105 cursor-poitner col-span-1 w-auto cursor-pointer rounded-2xl border border-graylv2 p-4`;
 const bloglistCardImgStyle = `w-full h-[200px] object-cover object-center rounded-2xl overflow-hidden`;
 
 const bloglistCardBodyStyle = `py-4`;
@@ -83,3 +83,67 @@ const pageMoveButtonStyle = `relative flex inline-flex items-center rounded-[10p
 const pageNumberListStyle = `flex items-center justify-center gap-1`;
 const pageNumberStyle = `relative inline-flex items-center w-10 h-10 px-4 py-2 text-md font-normal text-graylv3`;
 const pageNumberActiveStyle = `text-primary font-bold`;
+
+// export name
+export {
+  menuListStyle,
+  mobileMenuStyle,
+  posth1Style,
+  posth2Style,
+  posth3Style,
+  posth4Style,
+  posth5Style,
+  posth6Style,
+  postpStyle,
+  postimgStyle,
+  postaStyle,
+  postulStyle,
+  postolStyle,
+  postliStyle,
+  postblockquoteStyle,
+  postpreStyle,
+  postcodeStyle,
+  posttableStyle,
+  posttheadStyle,
+  postthStyle,
+  posttbodyStyle,
+  posttdStyle,
+  posthrStyle,
+  postemStyle,
+  poststrongStyle,
+  postcategoryStyle,
+  posttitleStyle,
+  postauthordateDivStyle,
+  postauthorDivStyle,
+  postauthorImgStyle,
+  postauthorStyle,
+  postdateStyle,
+  postimgtitleStyle,
+  postsectionStyle,
+  notebookpreStyle,
+  notebookcodeStyle,
+  notebookcopyButtonStyle,
+  notebookdownloadButtonStyle,
+  bloglistFirstCardStyle,
+  bloglistFirstCardImgStyle,
+  bloglistFirstCardDescriptionStyle,
+  bloglistCardStyle,
+  bloglistCardImgStyle,
+  bloglistCardBodyStyle,
+  bloglistCardTitleStyle,
+  bloglistCardCategoryStyle,
+  bloglistCardDescriptionStyle,
+  bloglistCardAuthorDivStyle,
+  bloglistCardAuthorImgStyle,
+  bloglistCardAuthorStyle,
+  bloglistCardDateStyle,
+  searchInputStyle,
+  categoryContainerStyle,
+  categoryItemStyle,
+  categoryItemCountStyle,
+  paginationStyle,
+  pageMoveButtonStyle,
+  pageNumberListStyle,
+  pageNumberStyle,
+  pageNumberActiveStyle,
+};

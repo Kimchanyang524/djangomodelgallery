@@ -5,14 +5,14 @@ export function getHeader(navItems) {
   const navItemsHtml = navItems
     .map(
       ({ title, link }) =>
-        `<li><a href="${link}" class="text-white hover:text-gray-200">${title}</a></li>`,
+        `<li><a href="${link}" class="font-bold text-white hover:text-gray-200">${title}</a></li>`,
     )
     .join("");
 
   return `
-    <nav class="max-w-4xl mx-auto px-4">
-      <ul class="flex flex-wrap justify-center sm:justify-end space-x-4">
-        <li><a href="/" class="text-white hover:text-gray-200 basis-6/12">Home</a></li>
+    <nav class="mr-6 mx-auto px-4">
+      <ul class="flex flex-wrap justify-end sm:justify-end space-x-8">
+        <li><a href="/" class="font-bold text-white hover:text-gray-200 basis-6/12">Home</a></li>
         <button class="theme-toggle-button">다크모드</button>
         ${navItemsHtml}
       </ul>
